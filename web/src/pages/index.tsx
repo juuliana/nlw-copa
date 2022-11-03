@@ -1,11 +1,14 @@
 import Image from "next/image";
 import { FormEvent, useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 import { api } from "../lib/axios";
 import logoImg from "../assets/logo.svg";
 import usersAvatar from "../assets/users-avatar-example.png";
 import iconCheckImg from "../assets/icon-check.svg";
 import appPreviewImg from "../assets/app-nlw-copa-preview.png";
+import { success, error } from "../components/alerts";
 
 interface HomeProps {
   poolCount: number;
@@ -28,19 +31,22 @@ export default function Home(props: HomeProps) {
 
       await navigator.clipboard.writeText(code);
 
-      alert(
-        "Bolão criado com sucesso, o código foi copiado para a área de transferência!"
-      );
+      success({
+        message:
+          "Bolão criado com sucesso, o código foi copiado para a área de transferência!",
+      });
 
       setPoolTitle("");
-    } catch (error) {
-      alert("Falha ao criar o botão, tente novamente.");
+    } catch (err) {
+      error({ message: "Falha ao criar o botão, tente novamente." });
     }
   }
 
   return (
     <div className="max-w-[1124px] h-screen mx-auto grid grid-cols-2 gap-28 items-center">
       <main>
+        <ToastContainer />
+
         <Image src={logoImg} alt="NLW Copa" />
 
         <h1 className="mt-8 text-white text-5xl font-bold leading-tight">
