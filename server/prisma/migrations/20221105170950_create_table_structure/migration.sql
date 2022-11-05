@@ -1,19 +1,19 @@
 -- CreateTable
-CREATE TABLE "Pool" (
+CREATE TABLE "Poll" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "ownerId" TEXT,
     "title" TEXT NOT NULL,
     "code" TEXT NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "Pool_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+    CONSTRAINT "Poll_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- CreateTable
 CREATE TABLE "Participant" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "poolId" TEXT NOT NULL,
+    "pollId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    CONSTRAINT "Participant_poolId_fkey" FOREIGN KEY ("poolId") REFERENCES "Pool" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Participant_pollId_fkey" FOREIGN KEY ("pollId") REFERENCES "Poll" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "Participant_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -47,10 +47,10 @@ CREATE TABLE "Guess" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Pool_code_key" ON "Pool"("code");
+CREATE UNIQUE INDEX "Poll_code_key" ON "Poll"("code");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Participant_userId_poolId_key" ON "Participant"("userId", "poolId");
+CREATE UNIQUE INDEX "Participant_userId_pollId_key" ON "Participant"("userId", "pollId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");

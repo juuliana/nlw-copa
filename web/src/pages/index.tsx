@@ -11,20 +11,20 @@ import appPreviewImg from "../assets/app-nlw-copa-preview.png";
 import { success, error } from "../components/alerts";
 
 interface HomeProps {
-  poolCount: number;
+  pollCount: number;
   userCount: number;
   guessCount: number;
 }
 
 export default function Home(props: HomeProps) {
-  const [poolTitle, setPoolTitle] = useState("");
+  const [pollTitle, setPollTitle] = useState("");
 
-  async function createPool(event: FormEvent) {
+  async function createPoll(event: FormEvent) {
     event.preventDefault();
 
     try {
-      const { data } = await api.post("/pools", {
-        title: poolTitle,
+      const { data } = await api.post("/polls", {
+        title: pollTitle,
       });
 
       const { code } = data;
@@ -36,7 +36,7 @@ export default function Home(props: HomeProps) {
           "Bolão criado com sucesso, o código foi copiado para a área de transferência!",
       });
 
-      setPoolTitle("");
+      setPollTitle("");
     } catch (err) {
       error({ message: "Falha ao criar o botão, tente novamente." });
     }
@@ -62,14 +62,14 @@ export default function Home(props: HomeProps) {
           </strong>
         </div>
 
-        <form onSubmit={createPool} className="mt-5 flex gap-2">
+        <form onSubmit={createPoll} className="mt-5 flex gap-2">
           <input
             className="flex-1 px-6 py-4 rounded bg-gray-800 border border-gray-600 text-sm text-gray-100"
             type="text"
             required
-            value={poolTitle}
+            value={pollTitle}
             placeholder="Qual nome do seu bolão?"
-            onChange={(event) => setPoolTitle(event.target.value)}
+            onChange={(event) => setPollTitle(event.target.value)}
           />
 
           <button
@@ -90,7 +90,7 @@ export default function Home(props: HomeProps) {
             <Image src={iconCheckImg} alt="" />
 
             <div className="flex flex-col">
-              <span className="font-bold text-2xl">+{props.poolCount}</span>
+              <span className="font-bold text-2xl">+{props.pollCount}</span>
               <span> Bolões criados</span>
             </div>
           </div>
@@ -118,16 +118,16 @@ export default function Home(props: HomeProps) {
 }
 
 export const getServerSideProps = async () => {
-  const [poolCountResponse, guessCountResponse, userCountResponse] =
+  const [pollCountResponse, guessCountResponse, userCountResponse] =
     await Promise.all([
-      api.get("/pools/count"),
+      api.get("/polls/count"),
       api.get("/guesses/count"),
       api.get("/users/count"),
     ]);
 
   return {
     props: {
-      poolCount: poolCountResponse.data.count,
+      pollCount: pollCountResponse.data.count,
       guessCount: guessCountResponse.data.count,
       userCount: userCountResponse.data.count,
     },
