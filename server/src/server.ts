@@ -1,4 +1,5 @@
 import Fastify from "fastify";
+import jwt from "@fastify/jwt";
 import cors from "@fastify/cors";
 
 import {
@@ -16,6 +17,10 @@ async function bootstrap() {
 
   await fastify.register(cors, {
     origin: true,
+  });
+
+  await fastify.register(jwt, {
+    secret: "nlwcopa",
   });
 
   await fastify.register(authRoutes);
