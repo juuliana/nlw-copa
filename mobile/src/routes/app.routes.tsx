@@ -1,3 +1,4 @@
+import React from "react";
 import { useTheme } from "native-base";
 import { PlusCircle, SoccerBall } from "phosphor-react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
