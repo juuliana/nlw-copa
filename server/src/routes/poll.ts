@@ -50,7 +50,7 @@ export async function pollRoutes(fastify: FastifyInstance) {
   });
 
   fastify.post(
-    "/polls/:id/join",
+    "/polls/join",
     {
       onRequest: [authenticate],
     },
@@ -149,6 +149,52 @@ export async function pollRoutes(fastify: FastifyInstance) {
       });
 
       return { polls };
+    }
+  );
+
+  fastify.get(
+    "/polls/:id",
+    {
+      onRequest: [authenticate],
+    },
+    async (request) => {
+      const getPollParams = z.object({
+        id: z.string(),
+      });
+
+      const { id } = getPollParams.parse(request.params);
+
+      const poll = await prisma.poll.findUnique({
+        where: {
+          id,
+        },
+        include: {
+          _count: {
+            select: {
+              participants: true,
+            },
+          },
+          participants: {
+            select: {
+              id: true,
+              user: {
+                select: {
+                  avatarUrl: true,
+                },
+              },
+            },
+            take: 4,
+          },
+          owner: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      });
+
+      return { poll };
     }
   );
 }
