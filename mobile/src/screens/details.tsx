@@ -5,6 +5,7 @@ import { HStack, useToast, VStack } from "native-base";
 
 import {
   EmptyMyPollList,
+  Guesses,
   Header,
   Loading,
   Option,
@@ -73,7 +74,7 @@ export function Details() {
         onShare={handleCodeShare}
       />
 
-      {poll._count?.participants <= 0 ? (
+      {poll._count?.participants > 0 ? (
         <VStack px={5} flex={1}>
           <PollHeader data={poll} />
 
@@ -89,6 +90,8 @@ export function Details() {
               onPress={() => setOptionSelected("ranking")}
             />
           </HStack>
+
+          <Guesses pollId={poll.id} />
         </VStack>
       ) : (
         <EmptyMyPollList code={poll.code} />
