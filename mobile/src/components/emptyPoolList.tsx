@@ -13,13 +13,9 @@ export function EmptyPollList() {
           color="yellow.500"
           textDecoration="underline"
         >
-          buscar um por código
+          buscar um por código ou{" "}
         </Text>
       </Pressable>
-
-      <Text color="white" fontSize="sm" textAlign="center" mx={1}>
-        ou
-      </Text>
 
       <Pressable>
         <Text textDecorationLine="underline" color="yellow.500">
