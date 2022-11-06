@@ -72,6 +72,7 @@ export function Game({
           code={data.firstTeamCountryCode}
           position="right"
           onChangeText={setFirstTeamPoints}
+          value={data.guess && String(data.guess.firstTeamPoints)}
         />
 
         <X color={colors.gray[300]} size={sizes[6]} />
@@ -80,6 +81,7 @@ export function Game({
           code={data.secondTeamCountryCode}
           position="left"
           onChangeText={setSecondTeamPoints}
+          value={data.guess && String(data.guess.secondTeamPoints)}
         />
       </HStack>
 
